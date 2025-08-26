@@ -2,4 +2,26 @@
 
 find -type f -not -exec grep -q "your_string" {} \; -exec rm -f {} \; -print
 
-2) 
+2) Replace all occurance.,
+grep -rl 'apple' . | xargs sed -i 's/apple/orange/g'
+
+🔍 Breakdown:
+
+grep -rl 'apple' .:
+ 
+-r: Recursive — search subdirectories.
+ 
+-l: Only output file names that contain the match.
+ 
+'apple': The search term.
+ 
+.: Start searching from the current directory.
+ 
+xargs sed -i 's/apple/orange/g':
+ 
+Feeds the list of file names from grep to sed.
+ 
+-i: Edits files in-place.
+ 
+'s/apple/orange/g': Replaces all occurrences of apple with orange
+ 
