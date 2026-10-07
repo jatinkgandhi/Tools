@@ -47,14 +47,22 @@ def read_symlink_target_file(path):
         if os.path.getsize(path) > MAX_TEXT_FILE_SIZE:
             return None
 
+        # It should end with exactly .so, not .so.5 or not .so.5.6
+        if not path.endswith(".so"):
+            return None
+
         with open(path, "rb") as f:
             data = f.read()
 
         # Must contain valid ASCII.
         text = data.decode("ascii").strip()
 
+        # Validate if file has valid text and it is pointing to .so library file
         if not text:
             return None
+
+        if not ".so" in text:
+            return None;
 
         # The target should be a single line.
         if "\n" in text or "\r" in text:
